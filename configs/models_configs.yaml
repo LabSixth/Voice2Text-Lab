@@ -1,0 +1,5 @@
+Whisper_AI_Configurations:
+  Model_Name: "openai/whisper-large-v3"
+  Hugging_Face_Token: False
+  Maximum_Token_Generation: 200
+  Language_Selection: "english"

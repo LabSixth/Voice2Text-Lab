@@ -5,3 +5,4 @@ Data_Processing_Pipeline:
     Raw_Data: "raw_libspeech"
   Source_Download: "http://www.openslr.org/resources/12/dev-clean.tar.gz"
   Corpus_Structure: "LibriSpeech/dev-clean"
+  Maximum_Batch_Size: 5
