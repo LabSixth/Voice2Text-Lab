@@ -1,0 +1,7 @@
+[project]
+name = "Voice_To_Text_To_Voice"
+version = "1.0.0"
+description = "A Text Analytics and Generative AI project combining voice to text summarization"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
