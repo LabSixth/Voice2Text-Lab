@@ -4,4 +4,19 @@ version = "1.0.0"
 description = "A Text Analytics and Generative AI project combining voice to text summarization"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "accelerate>=1.7.0",
+    "dagit>=1.10.15",
+    "dagster>=1.10.15",
+    "dagster-webserver>=1.10.15",
+    "httpx>=0.28.1",
+    "numpy>=2.2.6",
+    "polars>=1.29.0",
+    "torch>=2.7.0",
+    "torchaudio>=2.7.0",
+    "torchvision>=0.22.0",
+    "transformers>=4.51.3",
+]
+
+[tool.dagster]
+module_name = "src"

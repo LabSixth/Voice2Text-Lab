@@ -13,3 +13,4 @@ wheels/
 .idea
 .DS_Store
 docs
+data
