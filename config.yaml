@@ -1,0 +1,25 @@
+# config.yaml
+
+# Whisper model
+model_size: "large"
+
+# Preprocessing
+pre_emphasis: 0.97
+silence_aggressiveness: 2
+pcm_sample_rate: 16000 
+
+# Summary models
+summary_models:
+  - "t5-small"
+  - "t5-base"
+  - "t5-large"
+  - "facebook/bart-large-cnn"
+  - "google/pegasus-xsum"
+
+# NER settings
+ner_model:   "dslim/bert-base-NER"
+ner_agg:     "simple"
+ner_thresh:  0.10
+
+# Keywords fallback: how many top words to show
+keyword_count: 8
