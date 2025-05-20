@@ -3,6 +3,12 @@ Data_Processing_Pipeline:
     Temp_Zip: "dev-clean.tar.gz"
     Temp_Unzip: "libspeech"
     Raw_Data: "raw_libspeech"
+    Metadata: "cleaned_data"
+  Metadata_Configurations:
+    Save_Format: "parquet"
+    Filename: "speech_metadata.parquet"
+    Compression: "zstd"
+    Compression_Level: 22
   Source_Download: "http://www.openslr.org/resources/12/dev-clean.tar.gz"
   Corpus_Structure: "LibriSpeech/dev-clean"
   Maximum_Batch_Size: 5
