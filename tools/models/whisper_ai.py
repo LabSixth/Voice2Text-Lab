@@ -1,13 +1,11 @@
 
-from pathlib import Path
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
-from src import global_configs as cf
 
 
 class WhisperAI:
 
     def __init__(
-        self, model_name: str, model_task: str,
+        self, model_name: str, model_task: str, device: str,
         token_required: bool = False, token: str | None = None
     ):
         """
@@ -25,9 +23,10 @@ class WhisperAI:
         self.model_name = model_name
         self.token_required = token_required
         self.token = token
+        self.device = device
         self.model = AutoModelForSpeechSeq2Seq.from_pretrained(
             pretrained_model_name_or_path=model_name,
-            device_map=cf.DEVICE,
+            device_map=device,
             torch_dtype="auto",
             trust_remote_code=True,
             token=token if token_required else None
@@ -42,7 +41,7 @@ class WhisperAI:
             model=self.model,
             tokenizer=self.processor.tokenizer,
             feature_extractor=self.processor.feature_extractor,
-            device_map=cf.DEVICE,
+            device_map=device,
         )
 
     def inference(self, audio_files: list[str], max_new_tokens: int, language: str) -> list[str]:
@@ -67,6 +66,7 @@ class WhisperAI:
         result = self.pipe(
             audio_files,
             generate_kwargs={"language": language, "max_new_tokens": max_new_tokens},
-            batch_size=batch_size
+            batch_size=batch_size,
+            chunk_length_s=30
         )
         return result
