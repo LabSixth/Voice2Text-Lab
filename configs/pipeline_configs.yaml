@@ -32,10 +32,10 @@ Summarization_Named_Entity_Recognition:
       Filename: "speech_combined.parquet"
       Compression: "zstd"
       Compression_Level: 22
-    Model_Output:
+    Summarization_Outputs:
       Folder_Name: "model_output"
       Save_Format: "parquet"
-      Filename: "speech_summarize_ner.parquet"
+      Filename: "speech_summarized.parquet"
       Compression: "zstd"
       Compression_Level: 22
   Summarization_Models:

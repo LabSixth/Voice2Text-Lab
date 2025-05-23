@@ -3,3 +3,21 @@ Whisper_AI_Configurations:
   Hugging_Face_Token: False
   Maximum_Token_Generation: 200
   Language_Selection: "english"
+
+Google_Flan_T5:
+  Model_Name: "google/flan-t5-base"
+  Hugging_Face_Token: False
+  Maximum_Token_Generation:
+    Short_Output:
+      Minimum_Length: 30
+      Maximum_Length: 100
+    Medium_Output:
+      Minimum_Length: 100
+      Maximum_Length: 200
+    Large_Output:
+      Minimum_Length: 500
+      Maximum_Length: 1024
+
+Facebook_Bart_CNN:
+  Model_Name: "facebook/bart-large-cnn"
+
