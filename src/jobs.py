@@ -10,3 +10,10 @@ run_download_pipeline = define_asset_job(
         "speech_to_text_conversion", "save_transcriptions", "create_full_dataset"
     ]
 )
+
+run_modeling_pipeline = define_asset_job(
+    name="run_modeling_pipeline",
+    selection=[
+        "data_sourcing", "t5_summarization", "save_summaries"
+    ]
+)

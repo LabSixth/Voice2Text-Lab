@@ -17,7 +17,3 @@ Google_Flan_T5:
     Large_Output:
       Minimum_Length: 500
       Maximum_Length: 1024
-
-Facebook_Bart_CNN:
-  Model_Name: "facebook/bart-large-cnn"
-

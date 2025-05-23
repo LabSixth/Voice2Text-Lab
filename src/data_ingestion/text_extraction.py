@@ -122,7 +122,7 @@ def save_transcriptions(df: pl.DataFrame) -> None:
     os.makedirs(METADATA, exist_ok=True)
 
     # Save the data using the configuration provided
-    logger.info(f"Saving metadata into {TASK_CONFIG["Transcriptions_Configurations"]["Save_Format"]} file.")
+    logger.info(f"Saving metadata into {TASK_CONFIG['Transcriptions_Configurations']['Save_Format']} file.")
     if TASK_CONFIG["Transcriptions_Configurations"]["Save_Format"] == "parquet":
         df.write_parquet(
             file=save_path,

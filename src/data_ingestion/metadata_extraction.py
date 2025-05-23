@@ -148,7 +148,7 @@ def save_metadata(df: pl.DataFrame) -> None:
     os.makedirs(METADATA, exist_ok=True)
 
     # Save the data using the configuration provided
-    logger.info(f"Saving metadata into {CONFIG["Metadata_Configurations"]["Save_Format"]} file.")
+    logger.info(f"Saving metadata into {CONFIG['Metadata_Configurations']['Save_Format']} file.")
     if CONFIG["Metadata_Configurations"]["Save_Format"] == "parquet":
         df.write_parquet(
             file=save_path,
