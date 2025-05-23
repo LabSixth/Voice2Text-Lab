@@ -128,6 +128,7 @@ def metadata_gather(user_meta: dict) -> pl.DataFrame:
         )
         .select("user_id", "chapter_id", "recording_id", "recording_length", "recording_file")
         .sort("user_id", "chapter_id", "recording_id")
+        .with_row_index(name="id", offset=1)
     )
     logger.info("Completed process of extracting metadata of downloaded audio files.")
 

@@ -9,6 +9,13 @@ Data_Processing_Pipeline:
     Filename: "speech_metadata.parquet"
     Compression: "zstd"
     Compression_Level: 22
+  Transcriptions_Configurations:
+    Save_Format: "parquet"
+    Filename: "speech_transcriptions.parquet"
+    Compression: "zstd"
+    Compression_Level: 22
   Source_Download: "http://www.openslr.org/resources/12/dev-clean.tar.gz"
   Corpus_Structure: "LibriSpeech/dev-clean"
   Maximum_Batch_Size: 5
+  Model_Identifier: "Whisper_AI_Configurations"
+  Model_Task: "automatic-speech-recognition"
