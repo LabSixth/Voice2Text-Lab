@@ -137,7 +137,7 @@ def save_summaries(df: pl.DataFrame) -> None:
     save_path = cf.DATA_PATH.joinpath(folder_name, filename).resolve()
 
     # Make sure that the folder exists
-    os.makedirs(folder_name, exist_ok=True)
+    os.makedirs(cf.DATA_PATH.joinpath(folder_name).resolve(), exist_ok=True)
 
     # Save the data using the configuration provided
     logger.info(f"Saving metadata into {save_path} file.")
