@@ -21,6 +21,27 @@ ROOT_PATH = cf.DATA_PATH.joinpath(TASK_CONFIG["Folder_Tree"]["Raw_Data"]).resolv
     kinds={"python", "polars", "huggingface"}
 )
 def speech_to_text_conversion(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    Converts speech audio recordings to text transcriptions using the Whisper model.
+
+    This function takes a Polars DataFrame as input, containing metadata about audio recordings,
+    and processes the audio files to generate text transcriptions. It uses the Whisper model for
+    automatic speech recognition (ASR) and supports batch processing.
+
+    Args:
+        df (pl.DataFrame): Input DataFrame containing metadata of audio recordings. It must
+            include the columns "user_id", "chapter_id", and "recording_file".
+
+    Returns:
+        pl.DataFrame: A DataFrame with two columns: "id" and "recording_transcriptions".
+            "id" corresponds to the input DataFrame's id key, and "recording_transcriptions"
+            contains the generated text transcriptions for each audio recording.
+
+    Raises:
+        RuntimeError: If the batch size of input audio files is not equal to the batch size
+            of output transcriptions after processing.
+    """
+
     # Get processing configurations
     batch_size = TASK_CONFIG["Maximum_Batch_Size"]
 
@@ -82,6 +103,17 @@ def speech_to_text_conversion(df: pl.DataFrame) -> pl.DataFrame:
     kinds={"python", "polars", "parquet"}
 )
 def save_transcriptions(df: pl.DataFrame) -> None:
+    """
+    Saves transcription data from the provided Polars DataFrame to a file in the format
+    determined by the task configuration settings. The folder for saving the file will
+    be created if it does not already exist. If the save format is parquet, the function
+    uses specific compression settings defined in the task configuration.
+
+    Args:
+        df: Polars DataFrame containing transcription data that needs to be saved.
+
+    """
+
     # Get the configurations of save file
     filename = TASK_CONFIG["Transcriptions_Configurations"]["Filename"]
     save_path = METADATA.joinpath(filename).resolve()
