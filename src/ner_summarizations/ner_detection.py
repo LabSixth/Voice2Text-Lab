@@ -5,7 +5,6 @@ import logging
 import dagster as dg
 from gliner import GLiNER
 from src import global_configs as cf
-from src.ner_summarizations import text_summarization
 
 logger = logging.getLogger(__name__)
 CONFIGS = cf.PIPELINE_CONFIG["Summarization_Named_Entity_Recognition"]
