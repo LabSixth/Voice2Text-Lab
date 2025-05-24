@@ -66,6 +66,7 @@ def combine_data(df_entities: pl.DataFrame, df_summarized: pl.DataFrame) -> None
     df = (
         df_summarized
         .join(df_entities, on=["user_id", "chapter_id"], how="left")
+        .with_row_index(name="id", offset=1)
     )
 
     if CONFIGS["Folder_Tree"]["Combined_Output"]["Save_Format"] == "parquet":
