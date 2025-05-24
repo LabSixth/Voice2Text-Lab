@@ -1,0 +1,3 @@
+Streamlit_Application_Configurations:
+  Speech_Original_Data: "model_output/speech_combined.parquet"
+  Speech_Modeled_Data: "model_output/speech.parquet"

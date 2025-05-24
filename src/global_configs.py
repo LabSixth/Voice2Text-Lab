@@ -28,3 +28,7 @@ PIPELINE_CONFIG = yaml.safe_load(open(PIPELINE_CONFIG_PATH, "r"))
 # Get models configurations
 MODELS_CONFIG_PATH = Path(__file__).joinpath("..", "..", "configs", "models_configs.yaml").resolve()
 MODELS_CONFIG = yaml.safe_load(open(MODELS_CONFIG_PATH, "r"))
+
+# Get Streamlit configurations
+STREAMLIT_CONFIG_PATH = Path(__file__).joinpath("..", "..", "configs", "streamlit_configs.yaml").resolve()
+STREAMLIT_CONFIG = yaml.safe_load(open(STREAMLIT_CONFIG_PATH, "r"))
