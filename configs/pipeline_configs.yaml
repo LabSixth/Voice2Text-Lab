@@ -44,6 +44,12 @@ Summarization_Named_Entity_Recognition:
       Filename: "speech_entities.parquet"
       Compression: "zstd"
       Compression_Level: 22
+    Combined_Output:
+      Folder_Name: "model_output"
+      Save_Format: "parquet"
+      Filename: "speech.parquet"
+      Compression: "zstd"
+      Compression_Level: 22
   Summarization_Models:
     T5_Model_Identifier: "Google_Flan_T5"
     Bart_Model_Identifier: "Facebook_Bart_CNN"
