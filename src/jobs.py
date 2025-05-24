@@ -14,6 +14,7 @@ run_download_pipeline = define_asset_job(
 run_modeling_pipeline = define_asset_job(
     name="run_modeling_pipeline",
     selection=[
-        "data_sourcing", "t5_summarization", "save_summaries"
+        "data_sourcing", "t5_summarization", "save_summaries",
+        "entity_recognition", "save_entities"
     ]
 )

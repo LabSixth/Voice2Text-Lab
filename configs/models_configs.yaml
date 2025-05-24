@@ -17,3 +17,11 @@ Google_Flan_T5:
     Large_Output:
       Minimum_Length: 500
       Maximum_Length: 1024
+
+Gliner_Model:
+  Model_Name: "gliner-community/gliner_large-v2.5"
+  Maximum_Length: 1000
+  Labels:
+    - Persons
+    - Organization
+    - Location
