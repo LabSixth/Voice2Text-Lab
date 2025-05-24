@@ -74,3 +74,33 @@ with st.expander(label="Speech to Summary + NER - Default"):
         with t5_long:
             st.markdown("**T5 Long Summary**")
             st.write_stream(streamlit_utils.stream_text(data["t5_large"][0]))
+
+        # Present NER
+        st.markdown(
+            """
+            \nFrom the original text, we've used GliNER to extract Named Entities and their associated scores. Below is a
+            list of Named Entities extracted from the original text
+            """
+        )
+
+        persons, locations, organizations = st.columns(3, border=True)
+        with persons:
+            st.markdown("**The Persons**")
+            if data["persons_text"][0]:
+                st.write(streamlit_utils.calculate_ner_cof(data["persons_text"][0], data["persons_score"][0]))
+            else:
+                st.write("No person is detected using GliNER package.")
+
+        with locations:
+            st.markdown("**The Locations**")
+            if data["location_text"][0]:
+                st.write(streamlit_utils.calculate_ner_cof(data["location_text"][0], data["location_score"][0]))
+            else:
+                st.write("No location is detected using GliNER package.")
+
+        with organizations:
+            st.markdown("**The Organizations**")
+            if data["org_text"][0]:
+                st.write(streamlit_utils.calculate_ner_cof(data["org_text"][0], data["org_score"][0]))
+            else:
+                st.write("No organization is detected using GliNER package.")
