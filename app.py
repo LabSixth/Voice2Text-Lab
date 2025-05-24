@@ -1,7 +1,8 @@
 
 import streamlit as st
 import time
-from src.speech_inference import pre_compute
+from src import global_configs as cf
+from src.speech_inference import pre_compute, text_inference
 from tools.utils import streamlit_utils
 
 
@@ -75,7 +76,7 @@ with st.expander(label="Speech to Summary + NER - Default"):
             st.markdown("**T5 Long Summary**")
             st.write_stream(streamlit_utils.stream_text(data["t5_large"][0]))
 
-        # Present NER
+        # Present NER - Persons, Locations, and Organizations
         st.markdown(
             """
             \nFrom the original text, we've used GliNER to extract Named Entities and their associated scores. Below is a
@@ -104,3 +105,24 @@ with st.expander(label="Speech to Summary + NER - Default"):
                 st.write(streamlit_utils.calculate_ner_cof(data["org_text"][0], data["org_score"][0]))
             else:
                 st.write("No organization is detected using GliNER package.")
+
+        # Let the user choose alternative models to use for summary
+        st.markdown(
+            """
+            ---
+            Now that you have seen the summary from T5. Let's explore summaries produced by other more sophisticated models.
+            To get started, from the dropdown box below, choose the model that you'd liked to try.
+            """
+        )
+        model_option = st.selectbox(
+            label="Language models selection",
+            options=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Additional_Models"]
+        )
+
+        if model_option == "Facebook_Bart_CNN":
+            st.markdown("\n\nUsing Facebook's BART model, the summary of the original text is as follow.")
+            summary = text_inference.bart_inference(data["recording_transcriptions"][0], model_option)
+
+            bart_container = st.container(border=True)
+            with bart_container:
+                st.write_stream(streamlit_utils.stream_text(summary))

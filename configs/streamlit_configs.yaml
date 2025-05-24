@@ -1,6 +1,7 @@
 Streamlit_Application_Configurations:
   Speech_Original_Data: "model_output/speech_combined.parquet"
   Speech_Modeled_Data: "model_output/speech.parquet"
+  Object_TTL: 300
   Additional_Models:
     - Facebook_Bart_CNN
     - Phi4_Language_Model

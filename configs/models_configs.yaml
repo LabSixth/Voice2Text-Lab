@@ -18,6 +18,13 @@ Google_Flan_T5:
       Minimum_Length: 500
       Maximum_Length: 1024
 
+Facebook_Bart_CNN:
+  Model_Name: "facebook/bart-large-cnn"
+  Model_Task: "summarization"
+  Hugging_Face_Token: False
+  Minimum_Length: 30
+  Maximum_Length: 300
+
 Gliner_Model:
   Model_Name: "gliner-community/gliner_large-v2.5"
   Maximum_Length: 1000
