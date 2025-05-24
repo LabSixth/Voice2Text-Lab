@@ -9,6 +9,7 @@ dependencies = [
     "dagit>=1.10.15",
     "dagster>=1.10.15",
     "dagster-webserver>=1.10.15",
+    "gliner>=0.2.20",
     "httpx>=0.28.1",
     "numpy>=2.2.6",
     "polars>=1.29.0",
