@@ -44,7 +44,7 @@ class WhisperAI:
             device_map=device,
         )
 
-    def inference(self, audio_files: list[str], max_new_tokens: int, language: str) -> list[str]:
+    def inference(self, audio_files: list[str], max_new_tokens: int, language: str) -> list[dict]:
         """
         Performs inference on a list of audio files using a pre-configured pipeline, generating text
         outputs for each audio file provided. This method processes the audio files in batches and
@@ -56,7 +56,7 @@ class WhisperAI:
             language (str): The language for the inference process.
 
         Returns:
-            list[str]: A list of generated text outputs corresponding to each audio file.
+            list[dict]: A list of generated text outputs corresponding to each audio file.
         """
 
         # Get the length of the list of audio files

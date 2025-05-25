@@ -6,16 +6,16 @@ I will provide you the text and you tasks are as follow:
     - Remove unnecessary details, but preserve the main points and context.
 2. Named Entity Recognition (NER)
     - Identify and extract all named entities mentioned in the text.
-    - Classify them into types such as PERSON, ORGANIZATION, and LOCATION.
+    - Classify them into types such as PERSONS, ORGANIZATION, and LOCATION.
     - Provide a confidence score as a float between 0.0 and 1.0 for each identified entity.
     - If no entities of a given type are found, return an empty list for that type. Do not omit any category and do not use placeholder.
 
-You will return a valid JSON object, containing the summarized text and all the entities, i.e. PERSON, ORGANIZATION, and LOCATION, along with their associated confidence scores.
+You will return a valid JSON object, containing the summarized text and all the entities, i.e. PERSONS, ORGANIZATION, and LOCATION, along with their associated confidence scores.
 Please follow this structure exactly:
 
 {
     "SUMMARY": "Your summary of the text provided.",
-    "PERSON": [
+    "PERSONS": [
         {"Name": "The name of the first person identified", "Confidence": 0.99},
         {"Name": "The name of the second person identified", "Confidence": 0.50}
     ],
