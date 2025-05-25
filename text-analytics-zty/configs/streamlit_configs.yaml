@@ -1,0 +1,15 @@
+Streamlit_Application_Configurations:
+  Speech_Original_Data: "model_output/speech_combined.parquet"
+  Speech_Modeled_Data: "model_output/speech.parquet"
+  Streamlit_Temp_Folder: "tempdir"
+  Object_TTL: 300
+  Additional_Models:
+    - Facebook_Bart_CNN
+    - Phi4_Language_Model
+  User_Speech_Upload_Options:
+    - "T5 + GliNER"
+    - "Bart + GliNER"
+    - "Phi4 Language Model"
+  Summarization_Prompts:
+    System_Prompt: phi4_speech_prompt_system
+    User_Prompt: phi4_speech_prompt_user
