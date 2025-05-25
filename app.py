@@ -1,6 +1,7 @@
 
 import streamlit as st
-import time
+from seaborn.external.appdirs import system
+
 from src import global_configs as cf
 from src.speech_inference import pre_compute, text_inference
 from tools.utils import streamlit_utils, json_utils
@@ -23,6 +24,7 @@ st.markdown(
     To get started, expand any one of the sections below and get started with the application. 🚀
     """
 )
+
 
 # --------------------------------------------------------------------------------------------------------------------
 # Original Speech Application - Summarization and NER
@@ -61,7 +63,6 @@ with st.expander(label="Speech to Summary + NER - Default"):
         )
 
         st.markdown("\nUsing T5 Model from Hugging Face, the summaries are as follow.")
-        time.sleep(2)
 
         t5_short, t5_medium, t5_long = st.columns(3, border=True)
         with t5_short:
@@ -157,8 +158,8 @@ with st.expander(label="Speech to Summary + NER - Default"):
                 persons, locations, organizations = st.columns(3, border=True)
                 with persons:
                     st.markdown("**The Persons**")
-                    if summary["PERSON"]:
-                        st.write(summary["PERSON"])
+                    if summary["PERSONS"]:
+                        st.write(summary["PERSONS"])
                     else:
                         st.write("No person is detected using Phi4 Mini.")
 
@@ -176,3 +177,87 @@ with st.expander(label="Speech to Summary + NER - Default"):
                     else:
                         st.write("No organization is detected using Phi4 Mini.")
 
+
+# --------------------------------------------------------------------------------------------------------------------
+# User Uploaded Custom Speech - Summarization + NER
+# --------------------------------------------------------------------------------------------------------------------
+
+with st.expander(label="Speech to Summary + NER - Your Own Speech File 🔊"):
+    # Write a short description
+    st.markdown(
+        """
+        In this section of the application, you can choose to upload your own audio file and get summarized text and 
+        named entities extracted from it. To get started, upload an audio file, choose a model, and click on 
+        the "Summarize" button.
+        """
+    )
+
+    uploaded_file = st.file_uploader(label="Upload your audio file here", type=["wav", "mp3", "flac"])
+    model_option = st.selectbox(
+        label="Model selection",
+        options=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["User_Speech_Upload_Options"],
+        placeholder="Select a model to try...",
+        index=None
+    )
+    run = st.button(label="Run Pipeline")
+
+    # Once a file has been uploaded and a model has been selected, process the file and extract summary and NER
+    if uploaded_file and model_option and run:
+        # Check if prompts are needed
+        system_prompt = (
+            cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Summarization_Prompts"]["System_Prompt"]
+            if model_option == "Phi4 Language Model"
+            else None
+        )
+        user_prompt = (
+            cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Summarization_Prompts"]["User_Prompt"]
+            if model_option == "Phi4 Language Model"
+            else None
+        )
+
+        # Run inference based on the option selected by user
+        output = text_inference.full_inference_pipeline(
+            file=uploaded_file,
+            model_selection=model_option,
+            temp_dir=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Streamlit_Temp_Folder"],
+            system_prompt=system_prompt,
+            user_prompt=user_prompt
+        )
+
+        # From the output, display the summary and NER
+        st.markdown("\n\nA summary of the audio file provided is as follows.")
+        summary_container = st.container(border=True)
+        with summary_container:
+            st.write_stream(streamlit_utils.stream_text(output["SUMMARY"]))
+
+        st.markdown("\n\nFrom the audio file provided, the extracted entities are as follows.")
+        persons, locations, organizations = st.columns(3, border=True)
+        with persons:
+            st.markdown("**The Persons**")
+            try:
+                if output["PERSONS"]:
+                    st.write(output["PERSONS"])
+                else:
+                    st.write("No person is detected from the audio file provided.")
+            except KeyError:
+                st.write("No person is detected from the audio file provided.")
+
+        with locations:
+            st.markdown("**The Locations**")
+            try:
+                if output["LOCATION"]:
+                    st.write(output["LOCATION"])
+                else:
+                    st.write("No location is detected from the audio file provided.")
+            except KeyError:
+                st.write("No location is detected from the audio file provided.")
+
+        with organizations:
+            st.markdown("**The Organizations**")
+            try:
+                if output["ORGANIZATION"]:
+                    st.write(output["ORGANIZATION"])
+                else:
+                    st.write("No organization is detected from the audio file provided.")
+            except KeyError:
+                st.write("No organization is detected from the audio file provided.")
