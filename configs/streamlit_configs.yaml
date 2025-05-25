@@ -5,3 +5,6 @@ Streamlit_Application_Configurations:
   Additional_Models:
     - Facebook_Bart_CNN
     - Phi4_Language_Model
+  Summarization_Prompts:
+    System_Prompt: phi4_speech_prompt_system
+    User_Prompt: phi4_speech_prompt_user

@@ -25,6 +25,14 @@ Facebook_Bart_CNN:
   Minimum_Length: 30
   Maximum_Length: 300
 
+Phi4_Language_Model:
+  Model_Name: "microsoft/Phi-4-mini-instruct"
+  Model_Task: "text-generation"
+  Hugging_Face_Token: False
+  Maximum_New_Token: 32768
+  Temperature: 0.7
+  Top_P: 0.95
+
 Gliner_Model:
   Model_Name: "gliner-community/gliner_large-v2.5"
   Maximum_Length: 1000
