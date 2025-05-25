@@ -59,3 +59,48 @@ def calculate_ner_cof(text_list: list[str], text_score: list[float]) -> dict:
     # Calculate the average score and return
     average_scores = {key: scores[key] / counts[key] for key in scores}
     return average_scores
+
+
+def ner_cleaning(extracted_ner: list[dict]) -> dict:
+    """
+    Cleans and processes a list of Named Entity Recognition (NER) dictionaries by grouping entities
+    based on their labels and calculating the average confidence score for each label.
+
+    This function organizes extracted NER information into corresponding categories based on
+    entity labels, calculates the average score for each type of entity, and transforms the
+    labels to uppercase for the final output.
+
+    Args:
+        extracted_ner (list[dict]): A list of dictionaries where each dictionary represents an NER
+            entity with "label" (str), "text" (str), and "score" (float) as keys.
+
+    Returns:
+        dict: A dictionary where the keys are uppercased entity labels (str) and the values are
+            the average confidence scores (float) for those labels. Returns an empty dictionary
+            if the input list is empty.
+    """
+
+    # Loop through the list of dictionary and calculate average score for each type of NER
+    if extracted_ner:
+        # Separate the entities and scores into different bucket
+        entities = {}
+        scores = {}
+        for entity in extracted_ner:
+            if entity["label"] in entities:
+                entities[entity["label"]].append(entity["text"])
+                scores[entity["label"]].append(entity["score"])
+            else:
+                entities[entity["label"]] = [entity["text"]]
+                scores[entity["label"]] = [entity["score"]]
+
+        # For each of the entity, calculate the average score
+        all_scores = {}
+        for key, value in entities.items():
+            average_score = calculate_ner_cof(value, scores[key])
+            all_scores[key.upper()] = average_score
+
+        return all_scores
+
+    else:
+        return {}
+
