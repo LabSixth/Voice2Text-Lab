@@ -3,7 +3,7 @@ import streamlit as st
 import time
 from src import global_configs as cf
 from src.speech_inference import pre_compute, text_inference
-from tools.utils import streamlit_utils
+from tools.utils import streamlit_utils, json_utils
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -116,13 +116,63 @@ with st.expander(label="Speech to Summary + NER - Default"):
         )
         model_option = st.selectbox(
             label="Language models selection",
-            options=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Additional_Models"]
+            options=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Additional_Models"],
+            placeholder="Select a model to try...",
+            index=None
         )
 
-        if model_option == "Facebook_Bart_CNN":
-            st.markdown("\n\nUsing Facebook's BART model, the summary of the original text is as follow.")
-            summary = text_inference.bart_inference(data["recording_transcriptions"][0], model_option)
+        if model_option:
+            if model_option == "Facebook_Bart_CNN":
+                st.markdown("\n\nUsing Facebook's BART model, the summary of the original text is as follow.")
+                summary = text_inference.bart_inference(data["recording_transcriptions"][0], model_option)
 
-            bart_container = st.container(border=True)
-            with bart_container:
-                st.write_stream(streamlit_utils.stream_text(summary))
+                bart_container = st.container(border=True)
+                with bart_container:
+                    st.write_stream(streamlit_utils.stream_text(summary))
+
+            else:
+                st.markdown("\n\nUsing Microsoft's Phi4 Mini model, the summary of the original text is as follow.")
+                summary = text_inference.phi4_inference(
+                    text=data["recording_transcriptions"][0],
+                    model_ident=model_option,
+                    system_prompt=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Summarization_Prompts"]["System_Prompt"],
+                    user_prompt=cf.STREAMLIT_CONFIG["Streamlit_Application_Configurations"]["Summarization_Prompts"]["User_Prompt"]
+                )
+
+                # Clean the text and extract the JSON part out
+                summary = json_utils.json_reformatting(summary)
+
+                # Serve the results
+                phi4_container = st.container(border=True)
+                with phi4_container:
+                    st.write_stream(streamlit_utils.stream_text(summary["SUMMARY"]))
+
+                st.markdown(
+                    """
+                    \nUsing Phi4 Mini model, we could also attempt to extract the entities from the original text. The following
+                    are the entities extracted from the original text using Phi4 Mini model.
+                    """
+                )
+
+                persons, locations, organizations = st.columns(3, border=True)
+                with persons:
+                    st.markdown("**The Persons**")
+                    if summary["PERSON"]:
+                        st.write(summary["PERSON"])
+                    else:
+                        st.write("No person is detected using Phi4 Mini.")
+
+                with locations:
+                    st.markdown("**The Locations**")
+                    if summary["LOCATION"]:
+                        st.write(summary["LOCATION"])
+                    else:
+                        st.write("No location is detected using Phi4 Mini.")
+
+                with organizations:
+                    st.markdown("**The Organizations**")
+                    if summary["ORGANIZATION"]:
+                        st.write(summary["ORGANIZATION"])
+                    else:
+                        st.write("No organization is detected using Phi4 Mini.")
+
