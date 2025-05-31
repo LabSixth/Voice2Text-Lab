@@ -1,0 +1,58 @@
+Data_Processing_Pipeline:
+  Folder_Tree:
+    Temp_Zip: "dev-clean.tar.gz"
+    Temp_Unzip: "libspeech"
+    Raw_Data: "raw_libspeech"
+    Metadata: "cleaned_data"
+  Metadata_Configurations:
+    Save_Format: "parquet"
+    Filename: "speech_metadata.parquet"
+    Compression: "zstd"
+    Compression_Level: 22
+  Transcriptions_Configurations:
+    Save_Format: "parquet"
+    Filename: "speech_transcriptions.parquet"
+    Compression: "zstd"
+    Compression_Level: 22
+  Source_Download: "http://www.openslr.org/resources/12/dev-clean.tar.gz"
+  Corpus_Structure: "LibriSpeech/dev-clean"
+  Maximum_Batch_Size: 5
+  Model_Identifier: "Whisper_AI_Configurations"
+  Model_Task: "automatic-speech-recognition"
+
+Summarization_Named_Entity_Recognition:
+  Folder_Tree:
+    Cleaned_Data:
+      Folder_Nam: "cleaned_data"
+      Metadata_File: "speech_metadata.parquet"
+      Transcription_File: "speech_transcriptions.parquet"
+    Combined_Data:
+      Folder_Name: "model_output"
+      Save_Format: "parquet"
+      Filename: "speech_combined.parquet"
+      Compression: "zstd"
+      Compression_Level: 22
+    Summarization_Outputs:
+      Folder_Name: "model_output"
+      Save_Format: "parquet"
+      Filename: "speech_summarized.parquet"
+      Compression: "zstd"
+      Compression_Level: 22
+    Named_Entity_Outputs:
+      Folder_Name: "model_output"
+      Save_Format: "parquet"
+      Filename: "speech_entities.parquet"
+      Compression: "zstd"
+      Compression_Level: 22
+    Combined_Output:
+      Folder_Name: "model_output"
+      Save_Format: "parquet"
+      Filename: "speech.parquet"
+      Compression: "zstd"
+      Compression_Level: 22
+  Summarization_Models:
+    T5_Model_Identifier: "Google_Flan_T5"
+    Bart_Model_Identifier: "Facebook_Bart_CNN"
+    Language_Model_Identifier: "Phi4_Language_Model"
+  Named_Entity_Models:
+    Gliner_Identifier: "Gliner_Model"
