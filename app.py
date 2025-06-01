@@ -3,6 +3,7 @@ import streamlit as st
 from src import global_configs as cf
 from src.speech_inference import pre_compute, text_inference
 from tools.utils import streamlit_utils, json_utils
+from src.song_inference.inference_pipeline import full_inference_pipeline
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -259,3 +260,53 @@ with st.expander(label="Speech to Summary + NER - Your Own Speech File 🔊"):
                     st.write("No organization is detected from the audio file provided.")
             except KeyError:
                 st.write("No organization is detected from the audio file provided.")
+
+
+# --------------------------------------------------------------------------------------------------------------------
+# User Uploaded Custom Song - Summarization + NER
+# --------------------------------------------------------------------------------------------------------------------
+with st.expander(label="🎵 Your Song Inference"):
+    st.markdown(
+        """
+        Upload your own song/audio and run the full VoiceMuse pipeline: transcription, summaries, and entities.
+        """
+    )
+    uploaded_file = st.file_uploader(label="Upload your song file", type=["wav", "mp3", "flac"])
+    extract_vocals = st.checkbox("Extract vocals (separate voice)")
+    transcription_model = st.selectbox("Transcription Model", ["base", "small"], index=0)
+    summary_model = st.selectbox(
+        "Summary Model",
+        ["bart", "t5"],
+        format_func=lambda x: "BART (facebook/bart-large-cnn)" if x=="bart" else "T5 (t5-small)"
+    )
+    run = st.button("Run Song Pipeline")
+
+    if uploaded_file and run:
+        output = full_inference_pipeline(
+            file=uploaded_file,
+            transcription_model=transcription_model,
+            summary_model=summary_model,
+            extract_vocals=extract_vocals
+        )
+        # Transcript
+        st.subheader("Transcript")
+        st.text_area("", value=output["TRANSCRIPT"], height=200)
+        # Entities
+        st.subheader("Named Entities")
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.markdown("**Characters**")
+            for e in output.get("CHARACTERS", []): st.write(f"{e['text']} ({e['score']:.2f})")
+        with c2:
+            st.markdown("**Locations**")
+            for e in output.get("LOCATIONS", []): st.write(f"{e['text']} ({e['score']:.2f})")
+        with c3:
+            st.markdown("**Objects**")
+            for e in output.get("OBJECTS", []): st.write(f"{e['text']} ({e['score']:.2f})")
+        # Summaries
+        st.subheader("Summaries")
+        cols = st.columns(3)
+        for col, title, key in zip(cols, ["Long","Short","Tiny"], ["LONG_SUMMARY","SHORT_SUMMARY","TINY_SUMMARY"]):
+            with col:
+                st.markdown(f"**{title} Summary**")
+                st.write(output.get(key, ""))

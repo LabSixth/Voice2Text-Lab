@@ -1,17 +1,27 @@
+
 import os
 import subprocess
 from pathlib import Path
 
 
 def separate_vocals(audio, output_dir="/tmp/separated") -> str:
-    """Separate vocals from the audio file using Demucs.
-    Args:
-        audio (str or UploadedFile): Path to the audio file or an UploadedFile object.
-        output_dir (str): Directory to save the separated vocals.
-    Returns:
-        str: Path to the separated vocals file.
     """
-    
+    Separates vocals from the accompaniment in the given audio file using the Demucs
+    tool and outputs the separated vocals to the specified directory.
+
+    The function utilizes the Demucs CLI to perform the separation in "two-stems"
+    mode, which isolates the vocals from the rest of the audio.
+
+    Args:
+        audio: The path to the audio file as a string or an instance of
+            UploadedFile that supports the `read()` method.
+        output_dir: The directory where the separated vocals will be stored. Defaults
+            to "/tmp/separated".
+
+    Returns:
+        str: The path to the generated `vocals.wav` file.
+    """
+
     os.makedirs(output_dir, exist_ok=True)
     # Save UploadedFile if needed
     if hasattr(audio, 'read'):

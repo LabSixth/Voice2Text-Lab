@@ -1,3 +1,4 @@
+
 from gliner import GLiNER
 
 # Pronouns to filter out
@@ -12,17 +13,27 @@ _LABEL_MAP = {
 DEFAULT_LABELS = list(_LABEL_MAP.keys())
 
 # Load GLiNER model once
-_model = GLiNER.from_pretrained("urchade/gliner_medium-v2.1")
+_model = GLiNER.from_pretrained("gliner-community/gliner_large-v2.5")
+
 
 def extract_entities(text: str, labels: list[str] | None = None) -> dict:
-    """Extract named entities from the text using GLiNER.
-    Args:
-        text (str): The input text from which to extract entities.
-        labels (list[str], optional): List of labels to filter the entities. Defaults to None, which uses all labels.
-    Returns:
-        dict: A dictionary containing the extracted entities categorized by their labels.
     """
-    
+    Extracts named entities from the given text using a predefined list of labels or default labels.
+
+    This function utilizes a prediction model to extract entities categorized into various predefined
+    categories. Each recognized entity is scored and added to the appropriate category, skipping
+    pronouns and undefined labels.
+
+    Args:
+        text: The string input containing the text data for entity extraction.
+        labels: A list of strings representing label categories to filter entities.
+            If None, default labels will be used.
+
+    Returns:
+        A dictionary where keys are entity categories, and values are lists of dictionaries,
+        each containing the extracted entity text and a confidence score.
+    """
+
     if labels is None:
         labels = DEFAULT_LABELS
 

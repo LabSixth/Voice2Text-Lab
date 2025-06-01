@@ -37,6 +37,7 @@ dependencies = [
     "torchaudio>=2.7.0",
     "torchvision>=0.22.0",
     "transformers>=4.51.3",
+    "whisper>=1.1.10",
 ]
 
 [tool.dagster]
