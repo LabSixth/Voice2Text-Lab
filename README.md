@@ -104,5 +104,6 @@ Thanks to the following people for their contributions:
 - [Yuxuan Huang](https://github.com/Eleanorhhhyxz)
 - [Moyi Li](https://github.com/Moyi-Li)
 - [Mingsha Mo](https://github.com/monicamomingsha)
+- [Yee Jun Ow](https://github.com/YeeJunOw19)
 - [Tianyi Zhang](https://github.com/th3ch103)
 
