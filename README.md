@@ -25,8 +25,8 @@ This project allows users to convert spoken audio into readable text with high a
 Clone this repository to local machine.
 
 ```shell
-git clone git@github.com:LabSixth/text-analytics.git
-cd text-analytics
+git clone git@github.com:LabSixth/Voice2Text-Lab.git
+cd Voice2Text-Lab
 ```
 
 Using your choice of package manager, create a virtual environment and install the dependencies for this project.
