@@ -23,10 +23,12 @@ dependencies = [
     "dagit>=1.10.15",
     "dagster>=1.10.15",
     "dagster-webserver>=1.10.15",
+    "demucs>=4.0.1",
     "gliner>=0.2.20",
     "httpx>=0.28.1",
     "matplotlib>=3.10.3",
     "numpy>=2.2.6",
+    "openai-whisper>=20240930",
     "pandas>=2.2.3",
     "polars>=1.29.0",
     "seaborn>=0.13.2",
@@ -37,7 +39,6 @@ dependencies = [
     "torchaudio>=2.7.0",
     "torchvision>=0.22.0",
     "transformers>=4.51.3",
-    "whisper>=1.1.10",
 ]
 
 [tool.dagster]
